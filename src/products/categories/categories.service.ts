@@ -1,14 +1,14 @@
-import { LISTINGS_SERVICE } from '@app/shared';
+import { PRODUCTS_SERVICE } from '@app/shared';
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateCategoryDto } from '../../../../../libs/listings/src/dto/create-category.dto';
+import { CreateCategoryDto } from '../../../../../libs/products/src/dto/create-category.dto';
 import { lastValueFrom } from 'rxjs';
-import { UpdateCategoryDto } from '@app/listings';
+import { UpdateCategoryDto } from '@app/products';
 
 @Injectable()
 export class CategoriesService {
     constructor(
-        @Inject(LISTINGS_SERVICE) private readonly client: ClientProxy,
+        @Inject(PRODUCTS_SERVICE) private readonly client: ClientProxy,
     ) { }
 
     async create(createCategoryDto: CreateCategoryDto) {

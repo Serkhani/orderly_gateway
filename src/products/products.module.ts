@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ListingsController } from './listings.controller';
+import { ProductsController } from './products.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { LISTINGS_SERVICE } from '@app/shared';
-import { ListingsService } from './listings.service';
+import { PRODUCTS_SERVICE } from '@app/shared';
+import { ProductsService } from './products.service';
 import { ShopsModule } from './shops/shops.module';
 import { CategoriesModule } from './categories/categories.module';
 
@@ -10,18 +10,18 @@ import { CategoriesModule } from './categories/categories.module';
   imports: [
     ClientsModule.register([
       {
-        name: LISTINGS_SERVICE,
+        name: PRODUCTS_SERVICE,
         transport: Transport.RMQ,
         options: {
           urls: [process.env.RABBITMQ_URL],
-          queue: 'listings-service'
+          queue: 'products-service'
         }
       },
     ]),
     ShopsModule,
     CategoriesModule
   ],
-  controllers: [ListingsController],
-  providers: [ListingsService]
+  controllers: [ProductsController],
+  providers: [ProductsService]
 })
-export class ListingsModule { }
+export class ProductsModule { }

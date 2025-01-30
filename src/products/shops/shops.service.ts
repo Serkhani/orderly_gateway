@@ -1,5 +1,5 @@
-import { CreateShopDto, ShopQueryDto, UpdateShopDto } from '@app/listings';
-import { LISTINGS_SERVICE, PaginationQueryDto } from '@app/shared';
+import { CreateShopDto, ShopQueryDto, UpdateShopDto } from '@app/products';
+import { PRODUCTS_SERVICE, PaginationQueryDto } from '@app/shared';
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom, of } from 'rxjs';
@@ -7,7 +7,7 @@ import { lastValueFrom, of } from 'rxjs';
 @Injectable()
 export class ShopsService {
     constructor(
-        @Inject(LISTINGS_SERVICE) private readonly client: ClientProxy,
+        @Inject(PRODUCTS_SERVICE) private readonly client: ClientProxy,
     ) { }
 
     async create(createShopDto: CreateShopDto) {
@@ -52,10 +52,10 @@ export class ShopsService {
         }
     }
 
-    async listings(id: string) {
+    async products(id: string) {
         try {
             const shop = await lastValueFrom(
-                this.client.send('shops.listings', id)
+                this.client.send('shops.products', id)
             );
             return shop;
         } catch (error) {

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Put, Post, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ShopsService } from './shops.service';
-import { CreateShopDto, ShopQueryDto, UpdateShopDto } from '@app/listings';
+import { CreateShopDto, ShopQueryDto, UpdateShopDto } from '@app/products';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from '@app/shared';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -32,9 +32,9 @@ export class ShopsController {
         return this.shopService.findOne(id);
     }
 
-    @Get(':id/listings')
-    listings(@Param('id') id: string) {
-        return this.shopService.listings(id);
+    @Get(':id/products')
+    products(@Param('id') id: string) {
+        return this.shopService.products(id);
     }
 
     @Put(':id')

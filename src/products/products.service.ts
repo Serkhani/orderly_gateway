@@ -1,21 +1,21 @@
-import { CreateListingDto, ListingsQueryDto, UpdateListingDto } from '@app/listings';
-import { LISTINGS_SERVICE, PaginationQueryDto } from '@app/shared';
+import { CreateProductDto, ProductsQueryDto, UpdateProductDto } from '@app/products';
+import { PRODUCTS_SERVICE, PaginationQueryDto } from '@app/shared';
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable()
-export class ListingsService {
+export class ProductsService {
     constructor(
-        @Inject(LISTINGS_SERVICE) private readonly client: ClientProxy,
+        @Inject(PRODUCTS_SERVICE) private readonly client: ClientProxy,
     ) { }
 
-    async create(createListingDto: CreateListingDto) {
+    async create(createProductDto: CreateProductDto) {
         try {
-            const listing = await lastValueFrom(
-                this.client.send('listings.create', createListingDto)
+            const product = await lastValueFrom(
+                this.client.send('products.create', createProductDto)
             );
-            return listing;
+            return product;
         } catch (error) {
             if (error instanceof UnauthorizedException) {
                 throw new UnauthorizedException(error.message);
@@ -24,13 +24,13 @@ export class ListingsService {
         }
     }
 
-    async findAll(paginationQueryDto: PaginationQueryDto, listingsQueryDto: ListingsQueryDto) {
+    async findAll(paginationQueryDto: PaginationQueryDto, productsQueryDto: ProductsQueryDto) {
         try {
-            const listings = await lastValueFrom(
-                this.client.send('listings.findAll', { paginationQueryDto, listingsQueryDto})
+            const products = await lastValueFrom(
+                this.client.send('products.findAll', { paginationQueryDto, productsQueryDto})
             );
 
-            return listings;
+            return products;
         } catch (error) {
             if (error instanceof UnauthorizedException) {
                 throw new UnauthorizedException(error.message);
@@ -41,10 +41,10 @@ export class ListingsService {
 
     async findOne(id: string) {
         try {
-            const listing = await lastValueFrom(
-                this.client.send('listings.findOne', id)
+            const product = await lastValueFrom(
+                this.client.send('products.findOne', id)
             );
-            return listing;
+            return product;
         } catch (error) {
             if (error instanceof UnauthorizedException) {
                 throw new UnauthorizedException(error.message);
@@ -53,12 +53,12 @@ export class ListingsService {
         }
     }
 
-    async update(id: string, updateListingDto: UpdateListingDto) {
+    async update(id: string, updateProductDto: UpdateProductDto) {
         try {
-            const listing = await lastValueFrom(
-                this.client.send('listings.update', { id, ...updateListingDto })
+            const product = await lastValueFrom(
+                this.client.send('products.update', { id, ...updateProductDto })
             );
-            return listing;
+            return product;
         } catch (error) {
             if (error instanceof UnauthorizedException) {
                 throw new UnauthorizedException(error.message);
@@ -69,10 +69,10 @@ export class ListingsService {
 
     async remove(id: string) {
         try {
-            const listing = await lastValueFrom(
-                this.client.send('listings.delete', id)
+            const product = await lastValueFrom(
+                this.client.send('products.delete', id)
             );
-            return listing;
+            return product;
         } catch (error) {
             if (error instanceof UnauthorizedException) {
                 throw new UnauthorizedException(error.message);
@@ -83,11 +83,11 @@ export class ListingsService {
 
     async search(query: string) {
         try {
-            const listings = await lastValueFrom(
-                this.client.send('listings.search', query)
+            const products = await lastValueFrom(
+                this.client.send('products.search', query)
             );
             
-            return listings;
+            return products;
         } catch (error) {
             if (error instanceof UnauthorizedException) {
                 throw new UnauthorizedException(error.message);
